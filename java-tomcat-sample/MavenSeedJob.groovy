@@ -15,7 +15,7 @@ job('First_Maven_Job_Via_DSL')
 	  }
 	  publishers
 	  {
-	    archivingArtifacts '**/*.jar'
+	    archiveArtifacts '**/*.jar'
 	    }
  }
 
