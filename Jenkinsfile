@@ -1,8 +1,8 @@
 pipeline {
       agent any
       stages {
-            stage('Build an Application') {
-                  steps {
+            stage('Build an Application'){
+                  steps{
                         sh 'mvn -f Jenkins_Upgradev3/jenkinsfile clean package'
                   }
 		  post {
@@ -12,13 +12,13 @@ pipeline {
 			}
 			}
 			}
-            stage('Deploy in Staging Environment') {
+            stage('Deploy in Staging Environment'){
                   steps{
                         build job: 'Deploy_App_Staging_Environment'
                   }
             }
             
-	    stage('Deploy in Production Environment') {
+	    stage('Deploy in Production Environment'){
                   steps{
                         timeout(time:5, unit: 'DAYS')
 			input message: 'DEPLOY PRODUCTION ENVIRONMENT?'
