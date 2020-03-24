@@ -1,26 +1,29 @@
 pipeline {
       agent any
       stages {
-            stage('Init') {
+            stage('Build an Application') {
                   steps {
-                        echo 'Hi, this is Anshul from LevelUp360'
-                        echo 'We are Starting the Testing'
+                        sh 'mvn -f Jenkins_Upgradev3/jenkinsfile clean package'
+                  }
+		  post {
+		  success {
+		        echo "Archiving the Artifacts"
+			archiveArtifacts artifacts: '**/*.war'
+			}
+			}
+			}
+            stage('Deploy in Staging Environment') {
+                  steps {
+                        build job: 'Deploy_App_Staging_Environment'
                   }
             }
-            stage('Build') {
+            stage('Deploy in Production Environment') {
                   steps {
-                        echo 'Building Sample Maven Project'
+                        timeout(time:5, unit: 'DAYS')
+			input message: 'DEPLOY PRODUCTION ENVIRONMENT?'
                   }
-            }
-            stage('Deploy') {
-                  steps {
-                        echo "Deploying in Staging Area"
-                  }
-            }
-            stage('Deploy Production') {
-                  steps {
-                        echo "Deploying in Production Area"
+                       build job: 'Deploy_App_Production_Environment'
                   }
             }
       }
-}
+
