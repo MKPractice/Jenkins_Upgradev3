@@ -13,13 +13,13 @@ pipeline {
 			}
 			}
             stage('Deploy in Staging Environment') {
-                  steps {
+                  steps{
                         build job: 'Deploy_App_Staging_Environment'
                   }
             }
             
 	    stage('Deploy in Production Environment') {
-                  steps {
+                  steps{
                         timeout(time:5, unit: 'DAYS')
 			input message: 'DEPLOY PRODUCTION ENVIRONMENT?'
                   }
